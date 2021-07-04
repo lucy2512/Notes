@@ -1,6 +1,7 @@
 package com.parthib.notes
 
 import android.provider.ContactsContract
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 
@@ -8,12 +9,13 @@ import androidx.room.*
 interface Notedao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(note:Notes)
+    //suspend is a coroutines which makes background process easier.
+    suspend fun insert(note:Notes)
 
     @Delete
-    fun delete(note: Notes)
+    suspend fun delete(note: Notes)
 
     @Query(value = "Select * from notes_table order by id ASC")
-    fun getAllNotes(): List<Notes>
+    fun getAllNotes(): LiveData<List<Notes>>
 
 }
